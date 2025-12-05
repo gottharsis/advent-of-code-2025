@@ -1,7 +1,7 @@
 let file_path day test =
   if test
-    then Printf.sprintf "input/day%d_test.txt" day
-    else Printf.sprintf "input/day%d.txt" day
+    then Printf.sprintf "input/day%02d_test.txt" day
+    else Printf.sprintf "input/day%02d.txt" day
 
 
 let read_lines filename =
