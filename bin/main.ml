@@ -14,7 +14,7 @@ let get_day day =
   match day with
   | 1 -> (module Day01 : Common.Day)
   | 2 -> (module Day02 : Common.Day)
-  (* | 3 -> (module Day03 : Common.Day) *)
+  | 3 -> (module Day03 : Common.Day)
   | x -> invalid_day x
 
 let speclist =

@@ -1,5 +1,3 @@
-exception Bad_input of string
-
 let parse_id word =
   let lst = try String.split_on_char '-' word |> List.map int_of_string  with Failure s -> raise (Common.Bad_input s) in
   match lst with
