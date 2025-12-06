@@ -21,19 +21,32 @@ let part1 lines =
   lines |> List.map joltages |> List.map max_joltage |> List.fold_left ( + ) 0
   |> string_of_int
 
-(* returns idx, max_elem *)
-let find_max_in_slice array start len =
-  array |> CCArray.to_seq |> CCSeq.drop start |> CCSeq.take len
-  |> CCSeq.fold_lefti
-       (fun (max_elemi, max_elem) i elem ->
-         if elem > max_elem then (i, elem) else (max_elemi, max_elem))
+let max_in_subarray array start endi =
+  let len = endi - start in
+  array |> CCArray.to_seqi |> CCSeq.drop start |> CCSeq.take len
+  |> Seq.fold_left
+       (fun (besti, best) (i, elem) ->
+         if elem > best then (i, elem) else (besti, best))
        (-1, -1)
 
-let max_joltages2 joltages =
+(* *)
+let max_joltages2 amt joltages =
   let joltages = Array.of_list joltages in
   let n = Array.length joltages in
-  ()
+  let rec loop num_remaining acc start =
+    if Int.equal num_remaining 0 then acc
+    else
+      let endi = n - num_remaining + 1 in
+      let new_start, digit = max_in_subarray joltages start endi in
+      loop (num_remaining - 1) ((10 * acc) + digit) (new_start + 1)
+  in
+  loop amt 0 0
 
 let part2 lines =
-  lines |> List.map joltages |> List.map max_joltages2 |> List.fold_left ( + ) 0
-  |> string_of_int
+  lines
+  |> List.map (fun line ->
+      let arr = joltages line in
+      let best = max_joltages2 12 arr in
+      (* Printf.printf "For %s got %d\n" line best; *)
+      best)
+  |> List.fold_left ( + ) 0 |> string_of_int
