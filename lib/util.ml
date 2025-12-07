@@ -13,3 +13,4 @@ let all_some lst =
   aux lst
 
 let print_int_pair (a, b) = Format.printf "(%d, %d)@." a b
+let int_of_bool b = if b then 1 else 0
