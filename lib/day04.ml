@@ -1,14 +1,15 @@
 let part1 lines =
   let mat = Matrix.char_matrix_of_lines lines in
+  let num_neighbors point =
+    Matrix.all_neighbors mat point |> CCList.count (fun (_, ch) -> ch == '@')
+  in
   mat |> Matrix.to_seqi
-  |> Seq.map (fun (point, _) ->
-      let num_neighbors =
-        Matrix.all_neighbors mat point
-        |> List.fold_left
-             (fun acc (_, ch) -> if ch == '@' then acc + 1 else acc)
-             0
-      in
-      if num_neighbors < 4 then 1 else 0)
-  |> Seq.fold_left ( + ) 0 |> string_of_int
+  |> CCSeq.filter (fun (point, ch) ->
+      if ch <> '@' then false
+      else
+        let n = num_neighbors point in
+        (* let  i, j = point in Format.printf "Neighbors of %d %d: %d@." i j n; *)
+        n < 4)
+  |> CCSeq.length |> string_of_int
 
 let part2 _lines = "Not implemented"

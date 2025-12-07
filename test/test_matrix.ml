@@ -29,15 +29,35 @@ let test_neighbors_3_3_helper pos expected =
   Alcotest.(check (list (pair int int)))
     "All positions present in correct order" expected neighbors
 
+let test_neighbors_3_3_values () =
+  let grid =
+    Matrix.matrix_of_2d_list [ [ 1; 2; 3 ]; [ 4; 5; 6 ]; [ 7; 8; 9 ] ]
+  in
+  let neighbors = Matrix.all_neighbors grid (1, 1) in
+  let expected =
+    [
+      ((0, 1), 2);
+      ((0, 2), 3);
+      ((1, 2), 6);
+      ((2, 2), 9);
+      ((2, 1), 8);
+      ((2, 0), 7);
+      ((1, 0), 4);
+      ((0, 0), 1);
+    ]
+  in
+  Alcotest.(check (list (pair (pair int int) int)))
+    "All positions present in correct order" expected neighbors
+
 let test_neighbors_center () =
   test_neighbors_3_3_helper (1, 1)
-    [ (0, 1); (0, 2); (1, 2); (2, 2); (2, 1); (2, 0); (0, 1); (0, 0) ]
+    [ (0, 1); (0, 2); (1, 2); (2, 2); (2, 1); (2, 0); (1, 0); (0, 0) ]
 
 let test_neighbors_topleft () =
   test_neighbors_3_3_helper (0, 0) [ (0, 1); (1, 1); (1, 0) ]
 
 let test_neighbors_botright () =
-  test_neighbors_3_3_helper (2, 2) [ (2, 1); (1, 1); (1, 2) ]
+  test_neighbors_3_3_helper (2, 2) [ (1, 2); (2, 1); (1, 1) ]
 
 let test_seqi () =
   let grid = Matrix.matrix_of_2d_list [ [ 1; 2 ]; [ 3; 4 ] ] in
@@ -62,6 +82,8 @@ let suite =
       [
         tc "Center" test_neighbors_center;
         tc "Top left Corner" test_neighbors_topleft;
+        tc "Bottom Right Corner" test_neighbors_botright;
+        tc "Values" test_neighbors_3_3_values;
       ] );
     ("Seq Iter", [ tc "Seqi" test_seqi ]);
   ]

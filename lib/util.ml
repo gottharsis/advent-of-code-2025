@@ -11,3 +11,5 @@ let all_some lst =
     | None :: _ -> None
   in
   aux lst
+
+let print_int_pair (a, b) = Format.printf "(%d, %d)@." a b
