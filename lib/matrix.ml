@@ -6,6 +6,35 @@ let cols mat = mat.n_cols
 let create rows cols value =
   { data = Array.make_matrix rows cols value; n_rows = rows; n_cols = cols }
 
+let matrix_of_grid grid =
+  let n_rows = Array.length grid in
+  if n_rows == 0 then raise (Common.Bad_input "Empty grid");
+  let n_cols = Array.length grid.(0) in
+  for i = 1 to n_rows - 1 do
+    if Array.length grid.(i) <> n_cols then
+      raise
+        (Common.Bad_input
+           (Format.sprintf "Incorrect row length at row %d: got %d expected %d"
+              i
+              (Array.length grid.(i))
+              n_cols))
+  done;
+  { data = grid; n_rows; n_cols }
+
+let matrix_of_2d_list lst =
+  match lst with
+  | [] -> raise (Common.Bad_input "Empty list")
+  | first_row :: _ -> (
+      match first_row with
+      | [] -> raise (Common.Bad_input "Empty col")
+      | value :: _ ->
+          let n_rows = List.length lst and n_cols = List.length first_row in
+          let data = Array.make_matrix n_rows n_cols value in
+          lst
+          |> List.iteri (fun i row ->
+              row |> List.iteri (fun j value -> data.(i).(j) <- value));
+          { data; n_rows; n_cols })
+
 let char_matrix_of_lines (lines : string list) =
   match lines with
   | [] -> raise (Common.Bad_input "Cannot create grid of empty strings")
@@ -44,7 +73,7 @@ let s = (1, 0)
 let e = (0, 1)
 let w = (-1, 0)
 let ne = (-1, 1)
-let nw = (-1, 1)
+let nw = (-1, -1)
 let se = (1, 1)
 let sw = (1, -1)
 
@@ -55,7 +84,7 @@ let neighbors_h (directions : (int * int) list) (mat : 'a t) (point : int * int)
       let new_pt = apply_delta point delta in
       if is_valid_index mat new_pt then
         let i, j = new_pt in
-        let item = (i, j, mat.data.(i).(j)) in
+        let item = ((i, j), mat.data.(i).(j)) in
         Some item
       else None)
 

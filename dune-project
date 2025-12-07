@@ -19,7 +19,7 @@
  (name aoc2025)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml containers)
+ (depends ocaml containers (alcotest :with-test))
  (tags
   ("add topics" "to describe" your project)))
 

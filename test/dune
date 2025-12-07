@@ -1,2 +1,4 @@
 (test
- (name test_aoc2025))
+ (name test_aoc2025)
+ (libraries alcotest aoc2025)
+ (modules test_aoc2025 test_matrix))
