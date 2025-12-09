@@ -1,7 +1,11 @@
-type t = { parent : int array; size : int array }
+type t = { parent : int array; size : int array; mutable n_components : int }
 
 let create size =
-  { parent = Array.init size CCFun.id; size = Array.make size 0 }
+  {
+    parent = Array.init size CCFun.id;
+    size = Array.make size 0;
+    n_components = size;
+  }
 
 let find uf x =
   let x = ref x in
@@ -14,15 +18,16 @@ let find uf x =
 
 let union uf x y =
   let xroot = find uf x and yroot = find uf y in
-  if xroot <> yroot then
-    if uf.size.(xroot) < uf.size.(yroot) then (
-      uf.parent.(xroot) <- yroot;
-      uf.size.(yroot) <- uf.size.(yroot) + uf.size.(xroot))
-    else (
-      uf.parent.(yroot) <- xroot;
-      uf.size.(xroot) <- uf.size.(xroot) + uf.size.(yroot))
+  if xroot <> yroot then uf.n_components <- uf.n_components - 1;
+  if uf.size.(xroot) < uf.size.(yroot) then (
+    uf.parent.(xroot) <- yroot;
+    uf.size.(yroot) <- uf.size.(yroot) + uf.size.(xroot))
+  else (
+    uf.parent.(yroot) <- xroot;
+    uf.size.(xroot) <- uf.size.(xroot) + uf.size.(yroot))
 
 let connected uf x y = find uf x = find uf y
+let n_components uf = uf.n_components
 
 let get_component uf x =
   let parent = find uf x and num_elements = Array.length uf.parent in

@@ -17,6 +17,7 @@ let get_day day =
   | 4 -> (module Day04 : Common.Day)
   | 5 -> (module Day05 : Common.Day)
   | 7 -> (module Day07 : Common.Day)
+  | 8 -> (module Day08 : Common.Day)
   | x -> invalid_day x
 
 let speclist = [ ("-t", Arg.Set use_test_input, "Use test input") ]

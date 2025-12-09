@@ -15,3 +15,6 @@ val get_component : t -> int -> int list
 
 val components : t -> int list list
 (** [components uf] returns a list of all components as lists of integers. *)
+
+val n_components : t -> int
+(** [n_components uf] returns the number of disjoint components *)
