@@ -72,18 +72,18 @@ let suite =
   let open Alcotest in
   let tc n f = test_case n `Quick f in
   [
-    ( "Create",
+    ( "Matrix::Create",
       [
         tc "Dimensions" test_create_dimensions;
         tc "Values" test_create_value;
         tc "Jagged array raises exception" test_create_bad_grid;
       ] );
-    ( "Neighbors",
+    ( "Matrix::Neighbors",
       [
         tc "Center" test_neighbors_center;
         tc "Top left Corner" test_neighbors_topleft;
         tc "Bottom Right Corner" test_neighbors_botright;
         tc "Values" test_neighbors_3_3_values;
       ] );
-    ("Seq Iter", [ tc "Seqi" test_seqi ]);
+    ("Matrix::Seq Iter", [ tc "Seqi" test_seqi ]);
   ]
