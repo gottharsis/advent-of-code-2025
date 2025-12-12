@@ -47,3 +47,9 @@ val map : ('a -> 'b) -> 'a t -> 'b t
 val iter : ('a -> unit) -> 'a t -> unit
 val iteri : (int * int -> 'a -> unit) -> 'a t -> unit
 val to_seqi : 'a t -> ((int * int) * 'a) Seq.t
+
+val fill : int * int -> int * int -> 'a -> 'a t -> unit
+(** [fill topleft botright matrix value] fills the matrix from topleft to
+    botright (exclusive) with value *)
+
+val transform_inplace : int * int -> int * int -> ('a -> 'a) -> 'a t -> unit

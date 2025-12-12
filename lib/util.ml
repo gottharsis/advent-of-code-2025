@@ -31,3 +31,15 @@ let array_pairs arr =
 
 let pairs list = array_pairs @@ Array.of_list list
 let uncurry2 f (a, b) = f a b
+
+let successive_pairs lst =
+  let rec aux lst () =
+    match lst with
+    | a :: b :: rest -> Seq.Cons ((a, b), aux (b :: rest))
+    | _ -> Seq.Nil
+  in
+  aux lst
+
+module Operators = struct
+  let (@.)  = Fun.compose
+end

@@ -113,3 +113,19 @@ let to_seqi mat =
       Some (item, next_state)
   in
   Seq.unfold visit (0, 0)
+
+let iter_span (i1, j1) (i2, j2) f =
+  for i = i1 to i2 - 1 do
+    for j = j1 to j2 - 1 do
+      f i j
+    done
+  done
+
+let fill topleft botright value mat =
+  iter_span topleft botright (fun i j -> set mat (i, j) value)
+
+let transform_inplace topleft botright f mat =
+  iter_span topleft botright (fun i j ->
+      let curr = get mat (i, j) in
+      let v = f curr in
+      set mat (i, j) v)
