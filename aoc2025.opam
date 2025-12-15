@@ -13,8 +13,10 @@ depends: [
   "dune" {>= "3.20"}
   "ocaml"
   "containers"
+  "containers-data"
   "alcotest" {with-test}
   "iter"
+  "re"
   "odoc" {with-doc}
 ]
 build: [

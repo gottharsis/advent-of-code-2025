@@ -22,8 +22,10 @@
  (depends
   ocaml
   containers
+  containers-data
   (alcotest :with-test)
-  iter)
+  iter
+  re)
  (tags
   ("add topics" "to describe" your project)))
 
