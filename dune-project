@@ -5,7 +5,7 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github gottharsis/aoc2025))
 
 (authors "Author Name <author@example.com>")
 
