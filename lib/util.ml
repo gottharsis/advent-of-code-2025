@@ -41,5 +41,13 @@ let successive_pairs lst =
   aux lst
 
 module Operators = struct
-  let (@.)  = Fun.compose
+  let ( @. ) = Fun.compose
 end
+
+let expect2 ?msg lst =
+  match lst with
+  | [ a; b ] -> (a, b)
+  | _ ->
+      raise
+        (Common.Bad_input
+           (Option.value msg ~default:"Invalid input encountered"))

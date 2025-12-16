@@ -1,0 +1,8 @@
+; ppx/pattern_bind/dune
+
+(library
+ (name match_ppx)
+ (kind ppx_rewriter)
+ (libraries ppxlib)
+ (preprocess
+  (pps ppxlib.metaquot)))

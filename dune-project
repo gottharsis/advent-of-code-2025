@@ -24,6 +24,7 @@
   containers
   containers-data
   (alcotest :with-test)
+  ppxlib
   iter
   re)
  (tags

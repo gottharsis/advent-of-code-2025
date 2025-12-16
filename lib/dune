@@ -1,3 +1,5 @@
 (library
  (name aoc2025)
+ (preprocess
+  (pps match_ppx))
  (libraries containers iter re containers-data))
